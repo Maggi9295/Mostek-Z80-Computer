@@ -1,0 +1,118 @@
+10  REM SUPERHIRN  NOV. 1978 BY F. KREUTZBURG
+20 REM
+30 REM
+40 REM S = SCHWIERIGKEITSGRAD
+50 REM A(M) = yP-Kombination
+60 REM b(n) = Spielerkombination
+70 REM C(n) = interne Spielerkombination
+80 REM K = Spielerkombination im Block ABCDE bei der Eingabe
+90 REM Z = Teilerzahl um K in B(n) umzuwandeln
+100 REM F = falsche Position
+110 REM R = Position und Zahl richtig
+120 REM V = Zahl der Versuche
+130 PRINT
+140 PRINT
+150 PRINT
+160 PRINT "             S u p e r h i r n"
+170 PRINT
+180 PRINT 
+190 PRINT
+200 PRINT "Moechten Sie die Spielregeln (J/N):";
+210 INPUT Y$
+220 IF Y$="N" THEN 350
+230 PRINT "Spielregeln:"
+240 PRINT "------------"
+250 PRINT
+260 PRINT "Unter den 5 Positionen A,B,C,D und E denke ich mir jeweils Zahlen"
+270 PRINT "zwischen 0 und dem von Ihnen gewaehlten Schwierigkeitsgrad."
+280 PRINT
+290 PRINT "Sie haben nun die Aufgabe, diese von mir gedachte Kombination"
+300 PRINT "herauszufinden. Dazu koennen Sie unter den oben genannten Posi-"
+310 PRINT "tionen Zahlen eingeben, ueber die ich zu Ihrer Hilfe dann folgende"
+320 PRINT "Aussagen machen werde:"
+330 PRINT "   I) Es Stimmen X Zahlen im Wert und in der Position."
+340 PRINT "  II) Zusaetzlich stimmen X Zahlen im Wert, lediglich die Position ist falsch."
+350 PRINT
+360 PRINT
+370 PRINT
+380 PRINT
+390 PRINT "Welchen Schwierigkeitsgrad wuenschen Sie (0/1/2/3/4/5/6/7/8/9):";
+400 INPUT S
+410 FOR M = 1TO5
+420 A(M) =INT(RND(1)*(S+1))
+430 NEXT M
+440 V=0
+450 PRINT
+460 PRINT "Sie haben den Schwierigkeitsgrad ";S;" gewaehlt."
+470 PRINT "Unter den nachfolgenden Positionen habe ich mir deshalb Zahlen"
+480 PRINT "zwischen 0 und ";S;" gedacht"
+490 PRINT
+500 PRINT TAB(55);"Richtige Zahl   Nur"
+510 PRINT TAB(55);"und richtige    richtige"
+520 PRINT TAB(55);"Position        Zahl"
+530 PRINT TAB(36);"A  B  C  D  E"
+540 PRINT
+550 PRINT "Ihre Kombination? (ABCDE): ";
+560 INPUT K
+570 Z = 10000
+580 FOR N = 1TO5
+590 B(N) = INT (K/Z)
+600 K=K-B(N)*Z
+610 Z = Z/10
+620 NEXT N
+630 REM Auswertung der Spielerkombination
+640 R=0
+650 F=0
+660 FOR N = 1TO5
+670 AA(N)=A(N)
+680 BB(N)=B(N)
+690 NEXT N
+700 FOR N = 1TO5
+710 IF AA(N) <> BB(N) THEN 750
+720 R = R+1
+730 AA(N) = 10
+740 BB(N) = 20
+750 NEXT N
+760 FOR M = 1TO5
+770  FOR P = 1TO5
+780 IF AA(M) <> BB(P) THEN 820
+790 F = F+1
+800 AA(M) =11
+810 BB(P) = 22
+820 NEXT P
+830 NEXT M
+840 REM schon Spielende?
+850 V=V+1
+860 PRINT TAB(35);B(1)  B(2)  B(3)  B(4)  B(5);TAB(57);R;TAB(73);F
+870 IF R = 5 THEN 900
+880 IF V > (2*S+1) THEN 1120
+890 GOTO 550
+900 PRINT
+910 PRINT
+920 PRINT
+930 PRINT "       H e r z l i c h e n   G l u e c k w u n s c h  ! ! "
+940 PRINT
+950 PRINT "Sie haben meine Kombination erraten!"
+960 PRINT "Sie lautete tatsaechlich:"
+970 PRINT TAB(35); A(1)  A(2)  A(3)  A(4) A(5)
+980 PRINT 
+990 PRINT "Um diese Nuss zu knacken, haben Sie ";V;" Versuche benoetigt."
+1000 PRINT
+1010 PRINT
+1020 PRINT "Moechten Sie noch einmal spielen? (J/N):";
+1030 INPUT Y$
+1040 IF Y$ = "J" THEN 130
+1050 PRINT
+1060 PRINT "Macht nichts!"
+1070 PRINT "Hat mir Spass gemacht, mit Ihnen zu spielen!"  
+1080 PRINT "Kommen Sie doch mal wieder, ich bin jeder Zeit bereit!"
+1090 PRINT
+1100 PRINT "Ansonsten:  Guten Wirkungsgrad fuer den restlichen Teil des heutigen  Tages!"
+1110 END
+1120 PRINT
+1130 PRINT "Fuer den von Ihnen gewaehlten Schwierigkeitsgrad haben Sie nun aber "
+1140 PRINT "genug Versuche gehabt."
+1150 PRINT "Meine Kombination lautete naemlich:"
+1160 PRINT TAB(35); A(1)  A(2)  A(3)  A(4)  A(5)
+1170 GOTO 1000
+1180 END
